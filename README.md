@@ -19,7 +19,7 @@ Train a neural dialogue bot on your slack conversations and integrate it into yo
    
    Train a neural translation system to predict the reponse for each message. Parameters need to be tuned. The default parameters are only recommended if you have a lot of data. Otherwise, start with smaller `size` and `num_layers`. The `data_dir` should point to the directory where the slack corpus was stored. Create a directory for the checkpointing of the models and specify its location with `model_dir`.
    
-   The model is tensorflow's standard neural machine translation model, learn more about in the official tutorial. The optimizer is changed to Adam. 
+   The model is tensorflow's standard neural machine translation model, learn more about it in the official tutorial: https://www.tensorflow.org/versions/r0.10/tutorials/seq2seq/index.html. The optimizer is changed to Adam. 
    
    Each `steps_per_checkpoint` steps, the model is saved and perplexity on the training set is reported. Since the model uses greedy decoding, perplexities around 3-5 are required to produce fluent output.
    Training on a GPU speeds up training, but the code runs also on CPU.
