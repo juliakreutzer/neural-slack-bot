@@ -11,9 +11,9 @@ import random
 _buckets = [(5, 10), (10, 15), (20, 25), (40, 50)]
 
 READ_WEBSOCKET_DELAY = 0.5
-BOT_ID = open("bot.id", "r").readline().strip()
-BOT_CHANNEL = "TODO"
-BOT_CHANNEL_ID = "TODO"
+TOKEN = open("bot.token", "r").readline().strip()
+BOT_CHANNEL = "mybotchannel"
+BOT_NAME = "mybot"
 
 def handle_command(command, channel, model, embeddings, metadata):
     if command.startswith("###welcome"):
@@ -46,13 +46,23 @@ def parse_slack_output(slack_rtm_output):
 if __name__ == "__main__":
 
     # usage:
-    # python run_bot.py --num_layers 1 --size 200  --data_dir small-data/ --model_dir models-smaller
+    # python run_bot.py --num_layers 1 --size 200  --data_dir slack-data/ --model_dir models
 
     slack_client = SlackClient(TOKEN)
 
-    api_call = slack_client.api_call("emoji.list")
+    api_call = slack_client.api_call("users.list")
     if api_call.get('ok'):
         # retrieve all users so we can find our bot
+        users = api_call.get('members')
+        for user in users:
+            if 'name' in user and user.get('name') == BOT_NAME:
+                BOT_ID = user.get('id')
+    api_call = slack_client.api_call("channels.list")
+    for c in api_call.get('channels'):
+        if c['name'] == BOT_CHANNEL:
+            BOT_CHANNEL_ID = c['id']
+    api_call = slack_client.api_call("emoji.list")
+    if api_call.get('ok'):
         EMOJIS = api_call.get('emoji').keys()
         print EMOJIS
     # load the tf model
@@ -63,7 +73,7 @@ if __name__ == "__main__":
             metadata = json.load(m)
 
         # Load vocabularies.
-        vocab_file = "small-data/vocab.pkl"
+        vocab_file = FLAGS.data_dir+"/vocab.pkl"
         word2id = pkl.load(open(vocab_file, "rb"))
         id2word = {v:k for (k,v) in word2id.items()}
 
@@ -78,11 +88,11 @@ if __name__ == "__main__":
         model = create_model(sess, True, len(word2id))
 
         if slack_client.rtm_connect():
-            print "unbabbelbot running: id %s, token %s" % (BOT_ID, TOKEN)
+            print "%s running: id %s, token %s" % (BOT_NAME, BOT_ID, TOKEN)
             while True:
                 command, channel = parse_slack_output(slack_client.rtm_read())
                 if command and channel:
                     handle_command(command, channel, model, embeddings, metadata)
                 time.sleep(READ_WEBSOCKET_DELAY)
         else:
-            print "unbabbelbot failed"
+            print "%s failed" % BOT_NAME
