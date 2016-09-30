@@ -1,6 +1,6 @@
 ### Neural Slack Bot ###
 
-Train a neural dialogue bot on your slack conversations and integrate it into your slack team. Mostly fun project, inspired by https://arxiv.org/abs/1506.05869. Data pre-processing is done using heuristics. Having loose constraints on your conversational data, the bot is guaranteed to produce (more or less fluent) nonsense. Enjoy!
+Train a neural dialogue bot on your slack conversations and integrate it into your slack team. Mostly fun project, inspired by Vinyals & Le's work on "A Neural Conversational Model" (https://arxiv.org/abs/1506.05869). Data pre-processing is done using heuristics. Having loose constraints on your conversational data, the bot is guaranteed to produce (more or less fluent) nonsense. Enjoy!
 
 1. **Download slack conversations:**
 
@@ -49,5 +49,6 @@ Train a neural dialogue bot on your slack conversations and integrate it into yo
    In addition to that, the bot reacts on mentions, so addressing `@BOT_NAME` will make it respond.
 
 8. **Get creative:**
+
    This is a very basic and simple bot. Try to improve it by e.g. move away from greedy decoding, find good learning parameter settings, increase your corpus with movie dialogues, make the bot respond to more messages, let bots talk with each other, etc. Have fun!
    
