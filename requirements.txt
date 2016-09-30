@@ -1,0 +1,5 @@
+tensorflow
+scipy
+logging
+numpy
+slackclient
