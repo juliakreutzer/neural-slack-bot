@@ -34,12 +34,13 @@ Train a neural dialogue bot on your slack conversations and integrate it into yo
 
    Create or choose a channel in your slack team to integrate your bot. This is where the bot reacts to every incoming message by anyone. Let's call this channel `BOT_CHANNEL`.
    
-   Register a bot in your slack team's app integrations and store its token in a file `bot.id` in the root directory of this repository. (Build -> Make a Custom Integration -> Bots, pick a Username `BOT_NAME`) 
+   Register a bot in your slack team's app integrations and store its token in a file `bot.token` in the root directory of this repository. (Build -> Make a Custom Integration -> Bots, pick a Username `BOT_NAME`) 
 
 6. **Deploy the bot:**
 
    `python run_bot.py --batch_size 1`
    
+   First, set the constants `BOT_NAME` and `BOT_CHANNEL` in the first lines of `run_bot.py`to your chosen bot name and channel.
    Run this code with the same parameters that were used for training, except for `batch_size=1`.
    If the code doesn't report any failure, your bot is running!
 
@@ -50,5 +51,5 @@ Train a neural dialogue bot on your slack conversations and integrate it into yo
 
 8. **Get creative:**
 
-   This is a very basic and simple bot. Try to improve it by e.g. move away from greedy decoding, find good learning parameter settings, increase your corpus with movie dialogues, make the bot respond to more messages, let bots talk with each other, etc. Have fun!
+   This is a very basic and simple bot. Try to improve it by e.g. move away from greedy decoding, find good learning parameter settings, increase your corpus with movie dialogues, make the bot respond to more messages, let bots talk with each other, etc. Slack's RTM API (https://api.slack.com/rtm) offers a wide range of options to make your bot interact with other users. Have fun!
    
